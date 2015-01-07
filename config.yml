@@ -1,6 +1,6 @@
 hookah:
-  refresh-queue-subscribers: https://hookah.herokuapp.com/refresh_queue_subscribers
+  refresh-queue-subscribers: https://hookah.herokuapp.com/callbacks/refresh_queue_subscribers
   rollbar: https://api.rollbar.com/api/1/deploy/?access_token=2775e4b8226a46d68576976fa3151177&environment=production
 hookah-staging:
-  refresh-queue-subscribers: https://hookah-staging.herokuapp.com/refresh_queue_subscribers
+  refresh-queue-subscribers: https://hookah-staging.herokuapp.com/callbacks/refresh_queue_subscribers
   rollbar: https://api.rollbar.com/api/1/deploy/?access_token=6f51e8d1ebdb4676a4a13d54ff341573&environment=staging
