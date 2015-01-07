@@ -12,6 +12,7 @@ helpers do
   def logger
     request.logger
   end
+
   def config
     settings.config[params['app']] || {}
   end
@@ -19,23 +20,23 @@ end
 
 get '/' do
   status 200
-  "ok"
+  body 'ok'
 end
 
 post '/' do
-  logger.info "RECIEVED POST: #{params.inspect}"
+  logger.info "Received POST: #{params.inspect}"
   forwardable_params = params.dup
   forwardable_params.delete('splat')
   forwardable_params.delete('captures')
 
-  config.values.each do |url|
+  config.each do |service, url|
     uri = URI.parse(url)
     query = Rack::Utils.parse_query(uri.query)
     query = forwardable_params.merge(query)
-    logger.info "POSTING TO: #{uri}, BODY: #{Rack::Utils.build_query(query)}"
+    logger.info "Forwarding to #{service}: #{uri}, BODY: #{Rack::Utils.build_query(query)}"
     HTTParty.post( uri.to_s, body: query )
   end
 
   status 201
-  "ok"
+  body 'ok'
 end
