@@ -1,14 +1,15 @@
-# Deploy hook forker
+# Deploy Hook Forker
 
-Many hosting services, like Heroku, only allow you to have one HTTP deploy hook. We needed more so we wrote this app. This app accepts a post to /:app and forwards the post and its params to all the urls listed for that app in the config file.
+Heroku only allows you to have one HTTP deploy hook. This app accepts a post to /:app and forwards the post and its params to all the urls listed for that app in the config file.
 
 # Usage
 
-### Clone this app
+### Clone this app and create a Heroku git remote
 
 ```sh
-git clone https://github.com/deadlyicon/deploy-hook-forker.git
+git clone https://github.com/ImpactData/deploy-hook-forker.git
 cd deploy-hook-forker
+heroku git:remote -a impact-data-deploy-hook-forker -r production
 ```
 
 ### Modify the config file
@@ -22,18 +23,19 @@ another-heroku-app-name:
   honeybadger: https://api.honeybadger.io/v1/deploys?deploy[environment]=staging&api_key=INTENTIONALLY_LEFT_BLANK
 ```
 
-### Push it up to heroku
+### Once it's been merged into master, push it up to Heroku
 
 ```sh
-heroku apps:create ${COMPANY_NAME}-deploy-hook-forker
+git push production origin/master:master
 ```
 
-### Point your app's HTTP deploy hook to the new deploy hook forker app
+### Point your app's HTTP deploy hook to the new Deploy Hook Forker app
 
 ```sh
-heroku addons:add deployhooks:http --url=http://${COMPANY_NAME}-deploy-hook-forker.herokuapp.com
+heroku addons:add deployhooks:http --url=https://impact-data-deploy-hook-forker.herokuapp.com
 ```
 
+This can also be done via the Heroku apps web UI.
 
 ## References
 
